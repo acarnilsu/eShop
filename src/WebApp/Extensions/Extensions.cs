@@ -1,5 +1,7 @@
 ﻿using eShop.Basket.API.Grpc;
 using eShop.WebApp.Services.OrderStatus.IntegrationEvents;
+using eShop.WebApp.Services.OrderStatus.IntegrationEvents.EventHandling;
+using eShop.WebApp.Services.OrderStatus.IntegrationEvents.Events;
 using eShop.WebAppComponents.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -48,6 +50,7 @@ public static class Extensions
         eventBus.AddSubscription<OrderStatusChangedToShippedIntegrationEvent, OrderStatusChangedToShippedIntegrationEventHandler>();
         eventBus.AddSubscription<OrderStatusChangedToCancelledIntegrationEvent, OrderStatusChangedToCancelledIntegrationEventHandler>();
         eventBus.AddSubscription<OrderStatusChangedToSubmittedIntegrationEvent, OrderStatusChangedToSubmittedIntegrationEventHandler>();
+        eventBus.AddSubscription<OrderStatusChangedToCompletedIntegrationEvent, OrderStatusChangedToCompletedIntegrationEventHandler>();
     }
 
     public static void AddAuthenticationServices(this IHostApplicationBuilder builder)
