@@ -11,10 +11,10 @@ namespace eShop.Ordering.API.Application.DomainEventHandlers
 
         public OrderCompletedDomainEventHandler(IOrderRepository orderRepository, IBuyerRepository buyerRepository, IOrderingIntegrationEventService orderingIntegrationEventService, ILogger<OrderCompletedDomainEventHandler> logger)
         {
-            _orderRepository = orderRepository;
-            _buyerRepository = buyerRepository;
+            _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
+            _buyerRepository = buyerRepository ?? throw new ArgumentNullException(nameof(buyerRepository));
             _orderingIntegrationEventService = orderingIntegrationEventService;
-            _logger = logger;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task Handle(OrderCompletedDomainEvent domainEvent, CancellationToken cancellationToken)
