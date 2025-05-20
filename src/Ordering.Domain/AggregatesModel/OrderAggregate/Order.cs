@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Ordering.Domain.Events;
 
 namespace eShop.Ordering.Domain.AggregatesModel.OrderAggregate;
 
@@ -165,6 +166,17 @@ public class Order
             var itemsStockRejectedDescription = string.Join(", ", itemsStockRejectedProductNames);
             Description = $"The product items don't have stock: ({itemsStockRejectedDescription}).";
         }
+    }
+
+    public void SetCompletedStatus()
+    {
+        if (OrderStatus != OrderStatus.Shipped)
+        {
+            StatusChangeException(OrderStatus.Completed);
+        }
+        OrderStatus = OrderStatus.Completed;
+        Description = "The order was completed.";
+        AddDomainEvent(new OrderCompletedDomainEvent(this));
     }
 
     private void AddOrderStartedDomainEvent(string userId, string userName, int cardTypeId, string cardNumber,
